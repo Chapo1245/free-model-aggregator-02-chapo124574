@@ -34,14 +34,17 @@ serves only ~1/3 of prompts) for fewer refusals.
 The free OpenRouter key's 50-request daily cap was exhausted during local
 grading setup on 15 Nov (two grade-local runs burned ~72 real upstream
 calls while the local masq gateway's model-id rewriting was being fixed),
-so only variant A could be graded on trial-0, and that run itself was
-cap-starved:
+so only variant A could be graded on trial-0 that day, and that run itself
+was cap-starved (19/100). After the cap reset on 16 Nov all three variants
+were re-graded live: A/B/C all score 94 on trial-0, and A scores 94 on all
+3 practice instances. **A was submitted 16 Nov 07:25 WIB** (submission
+`01a1e1be-82bc-72bf-b0e0-52c27aa023ef`, commit `49ef652`).
 
 | Variant | t0 | upstream_calls | notes |
 | --- | --- | --- | --- |
-| **A greedy (SHIPPED)** | **19** | **3 answered / 29 requests** | quality 10, served 16, wire 38, failover 16, catalog 100, working 1 — cap-starved, not representative |
-| B greedy-retry | — | — | not graded yet — grade after the cap resets 00:00 UTC 16 Nov |
-| C spread-top3 | — | — | not graded yet — grade after the cap resets 00:00 UTC 16 Nov |
+| **A greedy (SUBMITTED)** | **94** | **6/trial, 8 gateway reqs** | quality 90, served 100, wire 100, failover 100, catalog 100, working 1 — **94 on ALL 3 practice instances (16 Nov re-grade, 90% interval 94..94)**; `end_turn` fix verified live |
+| B greedy-retry | 94 | 6, 8 gateway reqs | trial-0 only (16 Nov); same score as A, retry never triggered |
+| C spread-top3 | 94 | 6, 10 gateway reqs | trial-0 only (16 Nov); same score, more upstream requests |
 
 Variant code is kept at `build/free-model-aggregator-02/variants/{B,C}/`
 (outside this repo so the transcript gate counts no duplicated lines).
